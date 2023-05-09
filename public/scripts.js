@@ -9,54 +9,33 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 async function playGame() {
-    $(".gamemode-format").hide()
-    $(".rps-format").hide();
-    $(".rpsls-format").hide();
+    let gamemode = $('input[type=radio][name=game-choice]:checked').val();
+    let shot = $('input[type=radio][name=shot]:checked').val();
+    
+    baseURL = window.location.href + 'app/';
 
-    shot = document.querySelector('input[type="radio"][name*="shot"]:checked').value;
-    console.log(shot);
+    url = baseURL + gamemode + '/play/' + shot;
 
-    let game_mode = document.getElementById("rps") ? "rps" : "rpsls";
-    let opponent = document.getElementById('opponent');
-    if (opponent.checked){
-        let response = await fetch(window.location.href + 'app/' + game + '/play' + shot);
-        let result = await response.json();
+    console.log(url);
+    opponent_checked = document.getElementById("opponent").checked;
+
+    await fetch(url)
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(result){
         console.log(result);
-
-        let results = document.getElementById('results');
-        if (result.error){
-            results.innerHTML = result.error;
-        } else {
-            result_message.innerHTML = `<p>You: ${result.player}</p>
-                    <p>Your opponent: ${result.opponent}</p>
-                    <p>Result: You ${result.result.toUpperCase()}</p>`;
+        let result_element = document.getElementById("result");
+        if (document.getElementById("opponent").checked){
+            result_element.innerHTML = `<p>You chose: ${result.player}</p>
+            <p>Your opponent chose: ${result.opponent}</p>
+            <p>You ${result.result.toUpperCase()}</p>`;
+        } else{
+            result_element.innerHTML = result.player.toUpperCase();
         }
-    } else{
-        shot = 'rock'
-    }
-        
+    });
+}
 
-    //let rps_url = `${document.baseURI}/app/${game_mode}/play/${shot}/`;
-
-
-    // await fetch(rps_url)
-   //     .then(function(response) {
-    //        return response.json();
-    //    })
-    //    .then(function(result){
-    //        console.log(result);
-    //        let result_message = document.getElementById("result");
-   //         if (document.getElementById('opponent').checked){
-   //             result_message.innerHTML = `<p>You: ${result.player}</p>
-    //                <p>Your opponent: ${result.opponent}</p>
-    //                <p>Result: You ${result.result.toUpperCase()}</p>`;
-    //        }
-     //       else{
-   //             result_message.innerHTML = result.player.toUpperCase();
-//
-    //        }
- //       });
-//}
 
 function startOver() {
     location.reload()

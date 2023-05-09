@@ -4,7 +4,7 @@
 import { createRequire } from 'node:module';
 import {rps, rpsls} from './rpsls.js'; 
 const require = createRequire(import.meta.url);
-const cors = require('cors');
+
 
 // The above two lines allow us to use ES methods and CJS methods for loading
 // dependencies.
@@ -108,7 +108,7 @@ app.use(function(req, res) {
     const statusMsg = 'NOT FOUND'; 
     res.status(statusCode).end(statusCode+' '+statusMsg); 
 });
-app.use(cors());
+
 // Create app listener
 const server = app.listen(8080)
 
