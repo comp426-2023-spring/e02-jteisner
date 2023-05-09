@@ -1,12 +1,77 @@
 <html>
     <head>
-        <title>Rock</title>
+        <meta charset="UTF-8">
+        <title>Rock Paper Scissors</title>
         <!-- Link to your script file(s) and CSS in here somewhere -->
+        <script src="./scripts.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <link rel="stylesheet" href="styles.css">
     </head>
     <body>
+        <h1>Choose a gamemode:</h1>
+        <div id="gamemode" class="gamemode-format">
+            <input type="radio" name="game-choice" id="rps" value="rps" onclick="showHideShots()" checked>
+            <label for="rps">Play rock, paper, scissors?</label>
+			<br><br>
+			<input type="radio" id="rpsls" name="game-choice" value="rpsls" onclick="showHideShots()">
+			<label for="rpsls">Play rock, paper, scissors, lizard, Spock?</label>
+			<br><br>
+			<input type="checkbox" id="opponent" name="playtype" value="opponent" onclick="showHideShots()">
+			<label for="opponent">Play against an opponent?</label>
+			<br><br>
+        </div>
+        <div id="shots rps" class="rps-format">
+            <input type="radio" id="rock" name="shot" value="rock" checked="checked">
+			<label class="shots rps">Rock</label>
+			<input type="radio" id="paper" name="shot" value="paper">
+			<label class="shots rps">Paper</label>
+			<input type="radio" id="scissors" name="shot" value="scissors">
+			<label class="shots rps">Scissors</label>
+        </div>
+        <div id="shots rpls" class="rpsls-format">
+            <input type="radio" id="lizard" name="shot" value="lizard">
+			<label class="shots rpsls">Lizard</label>
+			<input type="radio" id="spock" name="shot" value="spock">
+			<label class="shots rpsls">Spock</label>
+        </div>
+        <br></br>
+        <div id="buttons">
+            <button type="button" id="play" onclick="playGame()">Play</button>
+            <button type="button" id="startover" onclick="startOver()">Start Over</button>
+        </div>
+        <div id="result" class="result.format">
+            <h2>Results:</h2>
+        </div>
+
+        
+
+        
+
 
     <!-- Your interface markup goes here -->
     <!-- For interface examples, look in the `/examples/` directory in the root of your starter code repo. -->
 
+    <div class="rules">
+        <h3 id="rulesblurb">The Rules</div>
+            <ul class="rpsinfo">
+                Rock Paper Scissors Rules
+                <li>Scissors CUTS Paper!</li>
+                <li>Paper COVERS Rock!</li>
+                <li>Rock SMASHES Scissors!</li>
+            </ul>
+            <ul class="rpsinfo">
+                Rock Paper Scissors Lizard Spock Rules
+                <li>Scissors CUTS Paper!</li>
+                <li>Paper COVERS Rock!</li>
+                <li>Rock SMASHES Scissors!</li>
+                <li>Rock SMOOSHES Lizard!</li>
+                <li>Lizard POISONS Spock!</li>
+                <li>Spock SMASHES Scissors!</li>
+                <li>Scissors DECAPTITATE Lizard!</li>
+                <li>Lizard EATS Paper!</li>
+                <li>Paper DISPROVES Spock!</li>
+                <li>Spock VAPORIZES Rock!</li>
+            </ul>
+        </div>
     </body>
 </html>

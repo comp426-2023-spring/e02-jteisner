@@ -2,7 +2,10 @@
 // Create require function 
 // https://nodejs.org/docs/latest-v18.x/api/module.html#modulecreaterequirefilename
 import { createRequire } from 'node:module';
+import {rps, rpsls} from './rpsls.js'; 
 const require = createRequire(import.meta.url);
+const cors = require('cors');
+
 // The above two lines allow us to use ES methods and CJS methods for loading
 // dependencies.
 // Load minimist for command line argument parsing
@@ -71,8 +74,44 @@ app.use(morgan(':remote-addr - :remote-user [:date[iso]] ":method :url HTTP/:htt
 // Serve static files
 const staticpath = args.stat || args.s || process.env.STATICPATH || path.join(__dirname, 'public')
 app.use('/', express.static(staticpath))
+//hello
+app.get('/app/rpsls/play/', (req, res) => {
+    const input = req.query.shot; 
+    const play = rpsls(input); 
+    res.send(play); 
+}); 
+
+app.use(express.json()); 
+app.use(express.urlencoded({extended: true})); 
+
+app.post('/app/rpsls/play/', (req, res) => {
+    const input = req.body.shot;
+    const play = rpsls(input); 
+    res.send(play); 
+    res.end(); 
+}); 
+
+// Endpoint /app/___/play/options/
+app.get('/app/rps/play/:input/', (req, res) => {
+    const play = rps(req.params.input); 
+    res.status(200).send(play); 
+});
+
+app.get('/app/rpsls/play/:input/', (req, res) => {
+    const play = rpsls(req.params.input); 
+    res.status(200).send(play); 
+})
+
+// Default API endpoint
+app.use(function(req, res) {
+    const statusCode = 404; 
+    const statusMsg = 'NOT FOUND'; 
+    res.status(statusCode).end(statusCode+' '+statusMsg); 
+});
+app.use(cors());
 // Create app listener
-const server = app.listen(port)
+const server = app.listen(8080)
+
 // Create a log entry on start
 let startlog = new Date().toISOString() + ' HTTP server started on port ' + port + '\n'
 // Debug echo start log entry to STDOUT
